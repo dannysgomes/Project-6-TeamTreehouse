@@ -32,19 +32,44 @@ const addPhraseToDisplay = arr => {
     const stringArr = arr[0].split("")
     // loop over stringArr and set each letter into a list item
     stringArr.forEach(letter =>{
-        const liItem = document.createElement('li');
-        liItem.textContent=letter;
+        const liItem = document.createElement('li');// for each 'letter' create li item
+        liItem.textContent=letter;// put letter in the li item
         liItem.classList.add(`${letter===" "?"space":"letter"}`) //classname set to "space" if letter is a space. String interpolation. Classname set to "letter" if letter is a letter.
-        phraseUl.append(liItem)
-        // for each 'letter' create li item
-        // put letter in the li item
-        // append to #phrase ul
+        phraseUl.append(liItem)// append to #phrase ul
+        
+             
  })
 
 }
 addPhraseToDisplay(returnedPhraseArr);
 
-const checkLetter = button => {
+const checkLetter = clickedLetter => {
+    
+//concept
+//on keypress check value of key against phrase array
+//if it is a match, then display the letter and store button text in match variable.
+//store collection of li in variable
+//create match variable as a bullion
+//loop over collection if keypress matches collection element value, change display to show and store button text in match variable.
+//on loop return, return the match variable
+
+const lettersArray = document.getElementsByClassName("letter");
+//console.log('lettersArray', lettersArray);
+let isMatch = null;
+for(let i = 0; i < lettersArray.length; i++){
+    const letterLi = lettersArray[i];
+    const letterLiText = letterLi.innerText.toLowerCase();
+    //console.log(letterLiText)
+    letterLi.classList.add(`${clickedLetter===letterLiText && "show"}`) 
+    // if match set matched letter to isMatch
+
+    if(clickedLetter===letterLiText){
+        isMatch=clickedLetter;
+  }
+  console.log("isMatch", isMatch)
+}
+
+
 
 }
 
@@ -58,7 +83,9 @@ button.addEventListener('click', () => {
     });
 
 qwerty.addEventListener('click', e => {
-
+// on key press send button to checkLetter(button)
+const clickedLetter = e.target.innerText; 
+checkLetter(clickedLetter)
 });
 
 
