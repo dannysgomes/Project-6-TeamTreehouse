@@ -20,11 +20,12 @@ let letterMatch = null;
 let missedCounter = 0;
 
 const phrases = [
-  "Hello Daniel",
-  "Up and Down",
-  "Left and Right",
-  "See you Later",
-  "Good morning",
+  "Danielle is awesome",
+  "Silas is so funny",
+  "Gabriel is handsome",
+  "Eden is so smart",
+  "Amanda is beautiful and kind",
+  "typical danny",
 ];
 
 // END GLOBAL VARIABLES
@@ -154,14 +155,20 @@ function checkWin() {
     // target overaly and add class of win
     overlay.classList.add("win");
     overlay.classList.remove("lose");
-    overlay.style.display = "flex";
-    overlay.firstElementChild.innerText = "Daniel won the wheel of success";
+    const showOverlay = () => {
+      overlay.style.display = "flex";
+    };
+    overlay.firstElementChild.innerText = "you won the wheel of success";
     button.innerText = "replay";
     // In the future reset game
-    resetKeyboard();
-    resetPhrase();
-    resetHearts();
-    resetCounter();
+    window.setTimeout(() => {
+      showOverlay();
+      resetKeyboard();
+      resetPhrase();
+      resetHearts();
+      resetCounter();
+      // reset phrase array
+    }, 1000);
   }
   if (missedCounter > 4) {
     console.log("lost");
@@ -172,15 +179,19 @@ function checkWin() {
     overlay.style.display = "flex";
     button.innerText = "replay";
     // reset
-    resetKeyboard();
-    resetPhrase();
-    resetHearts();
-    resetCounter();
+    window.setTimeout(() => {
+      resetKeyboard();
+      resetPhrase();
+      resetHearts();
+      resetCounter();
+      // reset phrase array
+    }, 1000);
   }
 }
 
 button.addEventListener("click", () => {
   overlay.style.display = "none";
+  getRandomPhraseAsArray(phrases);
 });
 
 qwerty.addEventListener("click", (e) => {
