@@ -1,3 +1,4 @@
+// GLOBAL VARIABLES
 const qwerty = document.getElementById("qwerty");
 
 const phrase = document.getElementById("phrase");
@@ -17,9 +18,8 @@ const heartsArray = Array.from(heartsCollection);
 // Store matched value
 let letterMatch = null;
 // store missed
-let missed = 0;
+let missedCounter = 0;
 
-/*
 const phrases = [
   "Hello Daniel",
   "Up and Down",
@@ -27,8 +27,7 @@ const phrases = [
   "See you Later",
   "Good morning",
 ];
-*/
-const phrases = ["hello hello"];
+// END GLOBAL VARIABLES
 
 const getRandomPhraseAsArray = (arr) => {
   //this function will pull a random phrase from the phrases array. The 5 phrases have the value 0-4
@@ -39,6 +38,7 @@ const getRandomPhraseAsArray = (arr) => {
 };
 
 const returnedPhraseArr = getRandomPhraseAsArray(phrases);
+// Temp log
 console.log("returnedPhraseArr", returnedPhraseArr);
 
 const addPhraseToDisplay = (arr) => {
@@ -53,18 +53,18 @@ const addPhraseToDisplay = (arr) => {
 };
 addPhraseToDisplay(returnedPhraseArr);
 
-const decreaseHeart = () => {
-  // create heartAtIndex and set it to the heart element in the heartsArray at missed index
-  // hint, missed index will be 'missed' variable - 1;
-  const heartAtIndex = heartsArray[missed - 1];
+const decreaseHearts = () => {
+  // Since there are 5 lives, we only execute the code if 'missedCounter' is equal or less to 5.
+  if (missedCounter <= 5) {
+   
+    const heartAtIndex = missedCounter - 1;
 
-  // we will need to change the heart image src to 'images/lostHeart.png'
-  // create imageElment and set it to the first child of the 'heartAtIndex'
-  // hit: to get the first child element you will use .firstChild, id. someElement.firstChild
-  const imageElement = heartAtIndex.firstChild;
-
-  // update src of imageElement to 'images/lostHeart.png'
-  imageElement.src = "images/lostHeart.png";
+    const imagesCollection = document.getElementsByClassName("tries");
+    const imagesArray = Array.from(imagesCollection);
+    const imageElement = imagesArray[heartAtIndex].firstChild;
+    
+    imageElement.src = "images/lostHeart.png";
+  }
 };
 
 const checkLetter = (clickedLetter) => {
@@ -72,35 +72,35 @@ const checkLetter = (clickedLetter) => {
   //on keypress check value of key against phrase array
   //if it is a match, then display the letter and store button text in match variable.
 
-  // EXECUTION
+   // EXECUTION
   // set a collection of letter elements
   const lettersCollection = document.getElementsByClassName("letter");
-  // Convert collection to array so we can use array methods
   const lettersArray = Array.from(lettersCollection);
+  console.log('array', lettersArray, typeof lettersArray)
 
-  // use find() to find match or undefined in array
   const isMatch = lettersArray.find(
     (e) => e.innerText.toLowerCase() === clickedLetter
   );
+  console.log('isMatch', isMatch)
+
   // if isMatch is undefined or 'wrong', then update hearts,
-  // if not a match, then iterate over array and set each match to 'show'
+  // if a match, then iterate over array and set each match to 'show'
+ 
   if (!isMatch) {
-    // increase missed counter by one below:
-    missed++;
-    // Call descreaseHeart() below:
-    decreaseHeart();
+    
+    missedCounter++;
+    
+   
+    decreaseHearts();
   } else {
     // iterate over lettersArray
     lettersArray.forEach((letterElement) => {
       // set letter to letterElement's innter text and lower case
       const letter = letterElement.innerText.toLowerCase();
       if (letter === clickedLetter) {
-        increase();
         // set letterMatch to matching letter
         letterMatch = letter;
-        letterElement.classList.add(
-          `${clickedLetter === letterMatch && "show"}`
-        );
+        letterElement.classList.add("show");
       }
     });
   }
@@ -125,10 +125,7 @@ const checkLetter = (clickedLetter) => {
     }
   }
   */
-
-  //console.log("wrongCounter", wrongCounter);
 };
-
 function checkWin() {}
 
 button.addEventListener("click", () => {
