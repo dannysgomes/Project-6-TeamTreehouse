@@ -14,7 +14,6 @@ const phraseUl = document.querySelector("ul");
 const heartsCollection = document.getElementsByClassName("tries");
 const heartsArray = Array.from(heartsCollection);
 
-//console.log('ul',  phraseUl)
 // Store matched value
 let letterMatch = null;
 // store missed
@@ -56,13 +55,12 @@ addPhraseToDisplay(returnedPhraseArr);
 const decreaseHearts = () => {
   // Since there are 5 lives, we only execute the code if 'missedCounter' is equal or less to 5.
   if (missedCounter <= 5) {
-   
     const heartAtIndex = missedCounter - 1;
 
     const imagesCollection = document.getElementsByClassName("tries");
     const imagesArray = Array.from(imagesCollection);
     const imageElement = imagesArray[heartAtIndex].firstChild;
-    
+
     imageElement.src = "images/lostHeart.png";
   }
 };
@@ -72,25 +70,21 @@ const checkLetter = (clickedLetter) => {
   //on keypress check value of key against phrase array
   //if it is a match, then display the letter and store button text in match variable.
 
-   // EXECUTION
+  // EXECUTION
   // set a collection of letter elements
   const lettersCollection = document.getElementsByClassName("letter");
   const lettersArray = Array.from(lettersCollection);
-  console.log('array', lettersArray, typeof lettersArray)
 
   const isMatch = lettersArray.find(
     (e) => e.innerText.toLowerCase() === clickedLetter
   );
-  console.log('isMatch', isMatch)
 
   // if isMatch is undefined or 'wrong', then update hearts,
   // if a match, then iterate over array and set each match to 'show'
- 
+
   if (!isMatch) {
-    
     missedCounter++;
-    
-   
+
     decreaseHearts();
   } else {
     // iterate over lettersArray
