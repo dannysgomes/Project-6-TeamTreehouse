@@ -26,6 +26,7 @@ const phrases = [
   "See you Later",
   "Good morning",
 ];
+
 // END GLOBAL VARIABLES
 
 const getRandomPhraseAsArray = (arr) => {
@@ -56,11 +57,9 @@ const decreaseHearts = () => {
   // Since there are 5 lives, we only execute the code if 'missedCounter' is equal or less to 5.
   if (missedCounter <= 5) {
     const heartAtIndex = missedCounter - 1;
-
     const imagesCollection = document.getElementsByClassName("tries");
     const imagesArray = Array.from(imagesCollection);
-    const imageElement = imagesArray[heartAtIndex].firstChild;
-
+    const imageElement = imagesArray[heartAtIndex].firstElementChild;
     imageElement.src = "images/lostHeart.png";
   }
 };
@@ -74,17 +73,14 @@ const checkLetter = (clickedLetter) => {
   // set a collection of letter elements
   const lettersCollection = document.getElementsByClassName("letter");
   const lettersArray = Array.from(lettersCollection);
-
   const isMatch = lettersArray.find(
     (e) => e.innerText.toLowerCase() === clickedLetter
   );
 
   // if isMatch is undefined or 'wrong', then update hearts,
   // if a match, then iterate over array and set each match to 'show'
-
   if (!isMatch) {
     missedCounter++;
-
     decreaseHearts();
   } else {
     // iterate over lettersArray
@@ -98,6 +94,7 @@ const checkLetter = (clickedLetter) => {
       }
     });
   }
+  checkWin();
 
   /*
   first I tried a loop over the collection, but the match/no match logic got complicated
@@ -120,7 +117,67 @@ const checkLetter = (clickedLetter) => {
   }
   */
 };
-function checkWin() {}
+function checkWin() {
+  const lettersCollection = document.getElementsByClassName("letter");
+  const lettersArray = Array.from(lettersCollection);
+  const winLettersCollection = document.getElementsByClassName("letter");
+  const showLettersCollection = document.getElementsByClassName("show");
+  const keyboardCollection = document.getElementsByClassName("key");
+  const keyboardArray = Array.from(keyboardCollection);
+  const imagesCollection = document.getElementsByClassName("tries");
+  const heartsArray = Array.from(imagesCollection);
+  const resetPhrase = () => {
+    lettersArray.forEach((letterElement) => {
+      // set letter to letterElement's innter text and lower case
+      letterElement.classList.remove("show");
+    });
+  };
+  const resetKeyboard = () => {
+    keyboardArray.forEach((keyElement) => {
+      // set letter to letterElement's innter text and lower case
+      keyElement.classList.remove("chosen");
+      keyElement.disabled = false;
+    });
+  };
+  const resetHearts = () => {
+    heartsArray.forEach((heartElement) => {
+      // set letter to letterElement's innter text and lower case
+      const imageElement = heartElement.firstElementChild;
+      imageElement.src = "images/liveHeart.png";
+    });
+  };
+  const resetCounter = () => {
+    missedCounter = 0;
+  };
+  if (winLettersCollection.length === showLettersCollection.length) {
+    console.log("overlay", overlay);
+    // target overaly and add class of win
+    overlay.classList.add("win");
+    overlay.classList.remove("lose");
+    overlay.style.display = "flex";
+    overlay.firstElementChild.innerText = "Daniel won the wheel of success";
+    button.innerText = "replay";
+    // In the future reset game
+    resetKeyboard();
+    resetPhrase();
+    resetHearts();
+    resetCounter();
+  }
+  if (missedCounter > 4) {
+    console.log("lost");
+    overlay.firstElementChild.innerText = "You lost the wheel of success";
+    overlay.classList.add("lose");
+    overlay.classList.remove("win");
+
+    overlay.style.display = "flex";
+    button.innerText = "replay";
+    // reset
+    resetKeyboard();
+    resetPhrase();
+    resetHearts();
+    resetCounter();
+  }
+}
 
 button.addEventListener("click", () => {
   overlay.style.display = "none";
