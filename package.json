@@ -1,0 +1,23 @@
+{
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node index.js",
+    "format": "npx prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  },
+  "name": "game_show_app_v1.2",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannysgomes/game_show_app_v1.2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannysgomes/game_show_app_v1.2/issues"
+  },
+  "homepage": "https://github.com/dannysgomes/game_show_app_v1.2#readme",
+  "description": ""
+}
